@@ -21,20 +21,38 @@ Bubble Sort repeatedly swaps adjacent elements if they are in the wrong order.
 
 2. Selection Sort (Shortest Logic)
 class SelectionSort {
-    public static void main(String[] args) {
-        int[] a = {5, 3, 1, 4, 2};
 
-        for (int i = 0; i < a.length - 1; i++) {
-            int min = i;
-            for (int j = i + 1; j < a.length; j++)
-                if (a[j] < a[min]) min = j;
+    static void selectionSort(int[] arr, int start) {
 
-            int t = a[min];
-            a[min] = a[i];
-            a[i] = t;
+        // Base case: only one element left
+        if (start >= arr.length - 1)
+            return;
+
+        // Find index of minimum element
+        int minIndex = start;
+        for (int i = start + 1; i < arr.length; i++) {
+            if (arr[i] < arr[minIndex]) {
+                minIndex = i;
+            }
         }
 
-        for (int n : a) System.out.print(n + " ");
+        // Swap minimum element with first unsorted element
+        int temp = arr[start];
+        arr[start] = arr[minIndex];
+        arr[minIndex] = temp;
+
+        // Recursive call for remaining array
+        selectionSort(arr, start + 1);
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {64, 25, 12, 22, 11};
+
+        selectionSort(arr, 0);
+
+        for (int x : arr) {
+            System.out.print(x + " ");
+        }
     }
 }
 

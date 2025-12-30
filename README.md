@@ -20,41 +20,59 @@ One-liner idea:
 Bubble Sort repeatedly swaps adjacent elements if they are in the wrong order.
 
 2. Selection Sort (Shortest Logic)
-class SelectionSort {
+import java.util.Scanner;
+
+class SelectionSortRecursive {
 
     static void selectionSort(int[] arr, int start) {
 
-        // Base case: only one element left
+        // Base case
         if (start >= arr.length - 1)
             return;
 
-        // Find index of minimum element
         int minIndex = start;
+
+        // Find minimum element
         for (int i = start + 1; i < arr.length; i++) {
             if (arr[i] < arr[minIndex]) {
                 minIndex = i;
             }
         }
 
-        // Swap minimum element with first unsorted element
+        // Swap
         int temp = arr[start];
         arr[start] = arr[minIndex];
         arr[minIndex] = temp;
 
-        // Recursive call for remaining array
+        // Recursive call
         selectionSort(arr, start + 1);
     }
 
     public static void main(String[] args) {
-        int[] arr = {64, 25, 12, 22, 11};
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter number of elements: ");
+        int n = sc.nextInt();
+
+        int[] arr = new int[n];
+
+        System.out.println("Enter elements:");
+        for (int i = 0; i < n; i++) {
+            arr[i] = sc.nextInt();
+        }
 
         selectionSort(arr, 0);
 
+        System.out.println("Sorted array:");
         for (int x : arr) {
             System.out.print(x + " ");
         }
+
+        sc.close();
     }
 }
+
 
 
 One-liner idea:

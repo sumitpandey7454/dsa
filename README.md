@@ -1,19 +1,52 @@
 1. Bubble Sort (Easy & Classic)
-class BubbleSort {
+import java.util.Scanner;
+
+class BubbleSortRecursive {
+
+    static void bubbleSort(int[] arr, int n) {
+
+        // Base case: array of size 1 is already sorted
+        if (n == 1)
+            return;
+
+        // One pass of bubble sort
+        for (int i = 0; i < n - 1; i++) {
+            if (arr[i] > arr[i + 1]) {
+                int temp = arr[i];
+                arr[i] = arr[i + 1];
+                arr[i + 1] = temp;
+            }
+        }
+
+        // Recursive call for remaining elements
+        bubbleSort(arr, n - 1);
+    }
+
     public static void main(String[] args) {
-        int[] a = {5, 3, 1, 4, 2};
 
-        for (int i = 0; i < a.length - 1; i++)
-            for (int j = 0; j < a.length - 1 - i; j++)
-                if (a[j] > a[j + 1]) {
-                    int t = a[j];
-                    a[j] = a[j + 1];
-                    a[j + 1] = t;
-                }
+        Scanner sc = new Scanner(System.in);
 
-        for (int n : a) System.out.print(n + " ");
+        System.out.print("Enter number of elements: ");
+        int n = sc.nextInt();
+
+        int[] arr = new int[n];
+
+        System.out.println("Enter elements:");
+        for (int i = 0; i < n; i++) {
+            arr[i] = sc.nextInt();
+        }
+
+        bubbleSort(arr, n);
+
+        System.out.println("Sorted array:");
+        for (int x : arr) {
+            System.out.print(x + " ");
+        }
+
+        sc.close();
     }
 }
+
 
 
 One-liner idea:
@@ -79,45 +112,97 @@ One-liner idea:
 Selection Sort selects the minimum element and places it at the correct position.
 
 3. Insertion Sort (Most Intuitive)
-class InsertionSort {
-    public static void main(String[] args) {
-        int[] a = {5, 3, 1, 4, 2};
+import java.util.Scanner;
 
-        for (int i = 1; i < a.length; i++) {
-            int key = a[i], j = i - 1;
-            while (j >= 0 && a[j] > key) {
-                a[j + 1] = a[j];
+class InsertionSort {
+
+    public static void insertionSort(int[] arr) {
+
+        for (int i = 1; i < arr.length; i++) {
+
+            int key = arr[i];
+            int j = i - 1;
+
+            // Shift elements to the right
+            while (j >= 0 && arr[j] > key) {
+                arr[j + 1] = arr[j];
                 j--;
             }
-            a[j + 1] = key;
+
+            // Insert key at correct position
+            arr[j + 1] = key;
+        }
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter number of elements: ");
+        int n = sc.nextInt();
+
+        int[] arr = new int[n];
+
+        System.out.println("Enter elements:");
+        for (int i = 0; i < n; i++) {
+            arr[i] = sc.nextInt();
         }
 
-        for (int n : a) System.out.print(n + " ");
+        insertionSort(arr);
+
+        System.out.println("Sorted array:");
+        for (int x : arr) {
+            System.out.print(x + " ");
+        }
+
+        sc.close();
     }
 }
+
 
 One-liner idea:
 Insertion Sort inserts each element into its correct position in the sorted part.
 
 *************************************************************
 1. Linear Search — Full Code
-class LinearSearch {
-    public static void main(String[] args) {
-        int[] a = {5, 3, 1, 4, 2};
-        int key = 4;
-        int pos = -1;
+import java.util.Scanner;
 
-        for (int i = 0; i < a.length; i++) {
-            if (a[i] == key) {
-                pos = i;
-                break;
-            }
+class LinearSearch {
+
+    static int linearSearch(int[] arr, int key) {
+
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == key)
+                return i;   // element found
+        }
+        return -1;          // element not found
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter number of elements: ");
+        int n = sc.nextInt();
+
+        int[] arr = new int[n];
+
+        System.out.println("Enter elements:");
+        for (int i = 0; i < n; i++) {
+            arr[i] = sc.nextInt();
         }
 
-        if (pos != -1)
-            System.out.println("Found at index " + pos);
+        System.out.print("Enter element to search: ");
+        int key = sc.nextInt();
+
+        int result = linearSearch(arr, key);
+
+        if (result != -1)
+            System.out.println("Element found at index: " + result);
         else
-            System.out.println("Not Found");
+            System.out.println("Element not found");
+
+        sc.close();
     }
 }
 
@@ -129,31 +214,50 @@ Linear search checks each element one by one.
 
 ⚠️ Array must be sorted
 
-class BinarySearch {
+import java.util.Scanner;
+
+class BinarySearchRecursive {
+
+    static int binarySearch(int[] arr, int low, int high, int key) {
+
+        if (low > high)
+            return -1;
+
+        int mid = low + (high - low) / 2;
+
+        if (arr[mid] == key)
+            return mid;
+        else if (arr[mid] < key)
+            return binarySearch(arr, mid + 1, high, key);
+        else
+            return binarySearch(arr, low, mid - 1, key);
+    }
+
     public static void main(String[] args) {
-        int[] a = {1, 2, 3, 4, 5};
-        int key = 4;
 
-        int low = 0, high = a.length - 1;
-        int pos = -1;
+        Scanner sc = new Scanner(System.in);
 
-        while (low <= high) {
-            int mid = (low + high) / 2;
+        System.out.print("Enter number of elements: ");
+        int n = sc.nextInt();
 
-            if (a[mid] == key) {
-                pos = mid;
-                break;
-            }
-            else if (a[mid] < key)
-                low = mid + 1;
-            else
-                high = mid - 1;
+        int[] arr = new int[n];
+
+        System.out.println("Enter sorted elements:");
+        for (int i = 0; i < n; i++) {
+            arr[i] = sc.nextInt();
         }
 
-        if (pos != -1)
-            System.out.println("Found at index " + pos);
+        System.out.print("Enter element to search: ");
+        int key = sc.nextInt();
+
+        int result = binarySearch(arr, 0, n - 1, key);
+
+        if (result != -1)
+            System.out.println("Element found at index: " + result);
         else
-            System.out.println("Not Found");
+            System.out.println("Element not found");
+
+        sc.close();
     }
 }
 
